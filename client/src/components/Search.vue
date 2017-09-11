@@ -1,12 +1,17 @@
 <template>
   <div class='container-fluid'>
-    <getHeader @finding="findBook()"></getHeader>
+    <getHeader></getHeader>
     <div class="container">
       <div class="row">
         <side_nav :category="category"></side_nav>
         <books :books="books"></books>
       </div>
-      <pagination @change="getPage()" :pages="pages" :currentPage="currentPage" :url="url"></pagination>
+      <pagination 
+      :change="getPage()" 
+      :pages="pages" 
+      :statusPage="statusPage " 
+      :currentPage="currentPage" 
+      :url="url"></pagination>
 
     </div>
   </div>
@@ -18,7 +23,7 @@ import side_nav from '@/components/Side-nav'
 import pagination from '@/components/pagination'
 import Books from '@/components/Books'
 import buttons from '@/components/button'
-const baseUrl = 'http://127.0.0.1:3000'
+const baseUrl = 'http://192.168.1.48:3000'
 
 export default {
   name: 'Layout',
@@ -28,11 +33,11 @@ export default {
       books: [],
       allBooks: null,
       pages: 1,
+      statusPage: 1,
       currentPage: 1,
       bookInPages: 10,
       err: '',
-      url: '/',
-      isSearch: ''
+      url: '/'
       // isActive: false,
     }
   },
@@ -53,7 +58,7 @@ export default {
         this.category = []
       })
 
-    // console.log('abc', this.$route.query.page);
+    console.log('abc', this.$route.query.page);
     axios.get(`${baseUrl}/api/data/?page = ${this.$route.query.page}`)
       .then(res => {
         // console.log(res);
@@ -63,7 +68,6 @@ export default {
         this.allBooks = parseInt(res.data.count.count)
         this.pages = Math.ceil(this.allBooks / this.bookInPages)
       })
-
   },
   methods: {
     getPage() {
@@ -78,37 +82,8 @@ export default {
         .catch(err => {
           console.log('err', err);
         })
-    },
-    findBook() {
-      console.log('search', this.isSearch)
-      console.log(this.$children);
-      this.isSearch = this.$children[0].isSearch
-    },
-
-    getData() {
-      axios.get(`${baseUrl}/api/search?name=${this.isSearch}`)
-        .then(res => {
-          console.log(res);
-
-          this.currentPage = this.$route.query.page
-          this.category = res.data.category
-          this.books = res.data.dataSearch
-          this.allBooks = parseInt(res.data.count.count)
-          this.pages = Math.ceil(this.allBooks / this.bookInPages)
-        })
-        .catch(err => {
-          console.log('err', err);
-        })
-    }
-
-
-  },
-  watch: {
-    isSearch: function(search) {
-      this.getData()
     }
   },
-
   components: {
     getHeader,
     side_nav,

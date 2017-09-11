@@ -1,7 +1,9 @@
 <template>
     <div class="col-md-3">
         <ul class="side-nav">
-            <li v-for="item in category" :key="item.id"> <router-link to="/category/:id" >{{item.name}}</router-link> </li>
+            <li v-for="item in category" :key="item.id" @click="isActived(item.id)">
+                <router-link :to="'/category/' + item.id" >{{item.name}}</router-link>
+            </li>
         </ul>
     </div>
 </template>
@@ -9,8 +11,15 @@
 <script>
 export default {
     name: 'side-nav',
-    props: ['category']
-    
+    props: ['category'],
+    methods: {
+        isActived (id) {
+            console.log('emit')
+            this.id_cat = id
+            this.$emit('activate', id)
+        }
+    }
+
 }
 </script>
 

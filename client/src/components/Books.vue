@@ -7,10 +7,10 @@
             </div>
             <div class="col-md-9 post-content">
                 <h2 class="title text-left">
-                    <a href="/:id">{{item.name}}</a>
+                    <router-link :to="'/detail/'+ item.id">{{item.name}}</router-link>
                 </h2>
                 <h5 class="author text-left">
-                    <a href="">By: {{item.author}}</a>
+                    <router-link :to="'/detail/'+ item.id">By: {{item.author}}</router-link>
                 </h5>
                 <p class="text-left">
                     Take a deep dive into one of the most significant SQL Server features–support for In-Memory Online Transaction Processing. The latest developments are covered, including support of off-row storage, columnstore indexes and operational analytics, changes in programmability and native compilation, and more. This book describes the architecture and internals…
@@ -25,7 +25,7 @@
 <script>
 import axios from 'axios'
 import side_nav from '@/components/Side-nav.vue'
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'http://127.0.0.1:3000'
 export default {
     name: 'Books',
     props: ['books']
