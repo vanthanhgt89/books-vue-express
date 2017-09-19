@@ -15,7 +15,7 @@
         </div>
         <pagination @change="getPage()" :pages="pages" :url="url1" :currentPage="currentPage">
         </pagination>
-
+        <h1>{{id}}</h1>
     </div>
 </template>
 
@@ -28,6 +28,7 @@ const baseUrl = 'http://127.0.0.1:3000'
 
 export default {
     name: 'Layout',
+    props: ['id'],
     data() {
         return {
             category: [],
@@ -37,7 +38,6 @@ export default {
             currentPage: 1,
             bookInPages: 10,
             url: '/category/',
-            // id_cat: 0,
             err: '',
             url1: '',
             isSearch: ''
@@ -45,7 +45,7 @@ export default {
         }
     },
     created() {
-        axios.get(`${baseUrl}/api/category/${this.$route.params.id}`)
+        axios.get(`${baseUrl}/api/category/${this.id}`)
             .then(res => {
                 this.category = res.data.category
                 this.books = res.data.dataCat
@@ -58,7 +58,7 @@ export default {
             })
 
 
-        axios.get(`${baseUrl}/api/category/${this.$route.params.id}?page=${this.$route.query.page}`)
+        axios.get(`${baseUrl}/api/category/${this.id}?page=${this.$route.query.page}`)
             .then(res => {
                 this.category = res.data.category
                 this.books = res.data.dataCat
@@ -86,7 +86,7 @@ export default {
                 })
         },
         getPage() {
-            axios.get(`${baseUrl}/api/category/${this.$route.params.id}?page=${this.$route.query.page}`)
+            axios.get(`${baseUrl}/api/category/${this.id}?page=${this.$route.query.page}`)
                 .then(res => {
                     // this.category = res.data.category
                     this.books = res.data.dataCat
@@ -126,7 +126,7 @@ export default {
             this.getData()
         },
         '$route' (to, from) {
-            console.log('change route',this.$route.params.id);
+            console.log('change route',this.id);
             console.log('THIS query', this.$route.query);
             this.getCategory()
         } 
