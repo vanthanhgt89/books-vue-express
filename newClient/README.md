@@ -2,6 +2,8 @@
 > A Vue.js project
 
 ### Server Express (http://localhost:3000/)
+[link server] (https://github.com/lephuongtu271094/BookStoreRestApi)
+[Data base] (https://github.com/thanhdat21293/bookstore.git)
 * API lấy dữ liệu
   * /api/data
   * /api/data/?page='value'
@@ -25,6 +27,7 @@
     * Book-Detail --> Detail
     * Search --> Search
     * Get-Header, Side-Nav dùng chung cho các trang
+    * paginatin để phân trang
 * Bước 3: Thiết kế router.js 
 ```js
 export default new Router({
